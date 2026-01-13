@@ -111,18 +111,13 @@ def add_student():
     if request.method == "POST":
         student_id = request.form["student_id"]
         name = request.form["name"]
-        grade = request.form["grade"]
-        department = request.form["department"]
 
         db = sqlite3.connect(DATABASE)
         cur = db.cursor()
 
         cur.execute(
-            """
-            INSERT INTO students (student_id, name, grade, department)
-            VALUES (?, ?, ?, ?)
-            """,
-            (student_id, name, grade, department)
+            "INSERT INTO students (student_id, name) VALUES (?, ?)",
+            (student_id, name)
         )
 
         db.commit()
@@ -131,6 +126,7 @@ def add_student():
         return redirect("/students")
 
     return render_template("add_student.html")
+
 
 @app.route("/students/<student_id>/add_score", methods=["POST"])
 def add_score(student_id):
