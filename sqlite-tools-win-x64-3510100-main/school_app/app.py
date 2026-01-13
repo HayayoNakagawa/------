@@ -103,6 +103,37 @@ def edit_scores(student_id):
 
     return redirect(url_for("student_detail", student_id=student_id))
 
+@app.route("/students/add", methods=["GET", "POST"])
+def add_student():
+    if request.method == "POST":
+        student_id = request.form["student_id"]
+        name = request.form["name"]
+
+        cur = get_db().cursor()
+        cur.execute(
+            "INSERT INTO students (student_id, name) VALUES (?, ?)",
+            (student_id, name)
+        )
+        get_db().commit()
+
+        return redirect("/students")
+
+    return render_template("add_student.html")
+
+@app.route("/students/<student_id>/add_score", methods=["POST"])
+def add_score(student_id):
+    subject = request.form["subject"]
+    score = request.form["score"]
+
+    cur = get_db().cursor()
+    cur.execute(
+        "INSERT INTO scores (student_id, subject, score) VALUES (?, ?, ?)",
+        (student_id, subject, score)
+    )
+    get_db().commit()
+
+    return redirect(f"/students/{student_id}")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
