@@ -6,6 +6,29 @@ import sqlite3
 app = Flask(__name__)
 
 DATABASE = "school.db"
+def init_db():
+    db = sqlite3.connect(DATABASE)
+    cur = db.cursor()
+
+    # students テーブル
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS students (
+        student_id TEXT PRIMARY KEY,
+        name TEXT
+    )
+    """)
+
+    # scores テーブル
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS scores (
+        student_id TEXT,
+        subject TEXT,
+        score INTEGER
+    )
+    """)
+
+    db.commit()
+    db.close()
 
 def get_db():
     db = getattr(g, "_database", None)
@@ -135,6 +158,8 @@ def add_score(student_id):
 
     return redirect(f"/students/{student_id}")
 
+with app.app_context():
+    init_db()
 
 if __name__ == "__main__":
     app.run(debug=True)
