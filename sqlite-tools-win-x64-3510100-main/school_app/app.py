@@ -24,7 +24,7 @@ def index():
 @app.route("/students")
 def students():
     cur = get_db().cursor()
-    cur.execute("SELECT * FROM student")
+    cur.execute("SELECT * FROM students")
     rows = cur.fetchall()
     return render_template("students.html", students=rows)
 

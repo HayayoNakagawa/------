@@ -4,7 +4,7 @@ conn = sqlite3.connect("school.db")
 cursor = conn.cursor()
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS student (
+CREATE TABLE IF NOT EXISTS students (
     student_id TEXT PRIMARY KEY,
     name TEXT,
     grade INTEGER,
