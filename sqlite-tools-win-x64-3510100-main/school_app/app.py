@@ -29,6 +29,26 @@ def students():
     return render_template("students.html", students=rows)
 
 
+@app.route("/scores")
+def scores():
+    cur = get_db().cursor()
+    cur.execute("""
+        SELECT
+            students.student_id,
+            students.name,
+            MAX(CASE WHEN scores.subject = '国語' THEN scores.score END),
+            MAX(CASE WHEN scores.subject = '数学' THEN scores.score END),
+            MAX(CASE WHEN scores.subject = '英語' THEN scores.score END),
+            MAX(CASE WHEN scores.subject = '情報' THEN scores.score END)
+        FROM students
+        JOIN scores ON students.student_id = scores.student_id
+        GROUP BY students.student_id, students.name
+        ORDER BY students.student_id
+    """)
+    rows = cur.fetchall()
+    return render_template("scores.html", scores=rows)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
