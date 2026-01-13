@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>学生管理システム</title>
+</head>
+<body>
+  <h1>学生管理システム</h1>
+  <ul>
+    <li><a href="{{ url_for('students') }}">学生一覧</a></li>
+    <li><a href="{{ url_for('scores') }}">成績一覧</a></li>
+    <li><a href="{{ url_for('add_student') }}">学生を追加</a></li>
+  </ul>
+</body>
+</html>

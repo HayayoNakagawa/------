@@ -21,7 +21,8 @@ def close_connection(exception):
 
 @app.route("/")
 def index():
-    return "Hello Flask!"
+    return render_template("index.html")
+
 
 @app.route("/students")
 def students():
