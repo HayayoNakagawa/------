@@ -132,11 +132,12 @@ def add_student():
     if request.method == "POST":
         student_id = request.form["student_id"]
         name = request.form["name"]
+        department = request.form["department"]
 
         cur = get_db().cursor()
         cur.execute(
-            "INSERT INTO students (student_id, name) VALUES (?, ?)",
-            (student_id, name)
+            "INSERT INTO students (student_id, name, department) VALUES (?, ?, ?)",
+            (student_id, name, department)
         )
         get_db().commit()
 
