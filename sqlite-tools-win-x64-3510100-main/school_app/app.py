@@ -28,5 +28,7 @@ def students():
     rows = cur.fetchall()
     return render_template("students.html", students=rows)
 
+
+
 if __name__ == "__main__":
     app.run(debug=True)
