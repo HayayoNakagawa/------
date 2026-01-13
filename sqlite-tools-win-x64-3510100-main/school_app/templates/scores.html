@@ -1,15 +1,50 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="ja">
 <head>
     <meta charset="utf-8">
     <title>成績一覧</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            background: #fff;
+            min-width: 600px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #1976d2;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f1f7ff;
+        }
+    </style>
 </head>
 <body>
-    <h1>成績一覧</h1>
 
-    <table border="1">
-       <tr>
+<h1>成績一覧</h1>
+
+<table>
+    <tr>
         <th>学籍番号</th>
         <th>名前</th>
         <th>国語</th>
@@ -17,17 +52,19 @@
         <th>英語</th>
         <th>情報</th>
     </tr>
+
     {% for s in scores %}
-    
     <tr>
         <td>{{ s[0] }}</td>
         <td>{{ s[1] }}</td>
-        <td>{{ s[2] }}</td>
-        <td>{{ s[3] }}</td>
-        <td>{{ s[4] }}</td>
-        <td>{{ s[5] }}</td>
+        <td>{{ s[3] if s[3] is not none else "-" }}</td>
+        <td>{{ s[4] if s[4] is not none else "-" }}</td>
+        <td>{{ s[5] if s[5] is not none else "-" }}</td>
+        <td>{{ s[6] if s[6] is not none else "-" }}</td>
     </tr>
-    {% endfor %}
-    </table>
+{% endfor %}
+
+</table>
+
 </body>
 </html>

@@ -127,7 +127,6 @@ def add_student():
 
     return render_template("add_student.html")
 
-
 @app.route("/students/<student_id>/add_score", methods=["POST"])
 def add_score(student_id):
     subject = request.form["subject"]

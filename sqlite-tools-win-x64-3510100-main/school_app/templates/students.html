@@ -1,32 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <meta charset="utf-8">
-    <title>学生一覧</title>
+  <meta charset="UTF-8">
+  <title>学生一覧</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    a.button {
+      background: #3b82f6;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    a.button:hover {
+      background: #2563eb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    th {
+      background: #3b82f6;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background: #f1f5f9;
+    }
+
+    td a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    td a:hover {
+      text-decoration: underline;
+    }
+
+    .empty {
+      padding: 20px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-    <h1>学生一覧</h1>
+  <div class="container">
+    <div class="top-bar">
+      <h1>学生一覧</h1>
+      <a href="/students/add" class="button">＋ 学生を追加</a>
+    </div>
 
-    <p>
-        <a href="/students/add">＋ 学生を追加</a>
-    </p>
-
-    <table border="1">
+    {% if students %}
+    <table>
+      <thead>
         <tr>
-            <th>学籍番号</th>
-            <th>名前</th>
+          <th>学籍番号</th>
+          <th>名前</th>
         </tr>
+      </thead>
+      <tbody>
+  {% for student in students %}
+  <tr>
+    <td>{{ student[0] }}</td>
+    <td>
+      <a href="/students/{{ student[0] }}">
+        {{ student[1] }}
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
 
-        {% for s in students %}
-        <tr>
-            <td>{{ s[0] }}</td>
-            <td>
-                <a href="/students/{{ s[0] }}">
-                    {{ s[1] }}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
     </table>
+    {% else %}
+      <div class="empty">学生データがありません</div>
+    {% endif %}
+  </div>
 </body>
 </html>
