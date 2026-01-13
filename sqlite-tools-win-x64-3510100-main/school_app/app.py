@@ -112,17 +112,21 @@ def add_student():
         student_id = request.form["student_id"]
         name = request.form["name"]
         grade = request.form["grade"]
+        department = request.form["department"]
 
-        conn = sqlite3.connect("school.db")
-        cur = conn.cursor()
+        db = sqlite3.connect(DATABASE)
+        cur = db.cursor()
 
         cur.execute(
-            "INSERT INTO students (student_id, name, grade) VALUES (?, ?, ?)",
-            (student_id, name, grade)
+            """
+            INSERT INTO students (student_id, name, grade, department)
+            VALUES (?, ?, ?, ?)
+            """,
+            (student_id, name, grade, department)
         )
 
-        conn.commit()
-        conn.close()
+        db.commit()
+        db.close()
 
         return redirect("/students")
 
