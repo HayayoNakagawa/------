@@ -2,23 +2,25 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>成績一覧</title>
+    <title>学生一覧</title>
 </head>
 <body>
-    <h1>成績一覧（確認用）</h1>
+    <h1>学生一覧</h1>
+
     <table border="1">
         <tr>
             <th>学籍番号</th>
             <th>名前</th>
-            <th>科目</th>
-            <th>点数</th>
         </tr>
-        {% for s in scores %}
+
+        {% for s in students %}
         <tr>
             <td>{{ s[0] }}</td>
-            <td>{{ s[1] }}</td>
-            <td>{{ s[2] }}</td>
-            <td>{{ s[3] }}</td>
+            <td>
+                <a href="/students/{{ s[0] }}">
+                    {{ s[1] }}
+                </a>
+            </td>
         </tr>
         {% endfor %}
     </table>
