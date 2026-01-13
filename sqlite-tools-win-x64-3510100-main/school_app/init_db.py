@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS students (
 );
 """)
 
-# 成績テーブル ← ★ここを追加
+# 成績テーブル
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS scores (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
