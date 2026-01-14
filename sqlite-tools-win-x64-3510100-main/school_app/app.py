@@ -129,10 +129,26 @@ def add_student():
         db = sqlite3.connect(DATABASE)
         cur = db.cursor()
 
+        # 学生情報を挿入
         cur.execute(
             "INSERT INTO students (student_id, name, department, grade, year) VALUES (?, ?, ?, ?, ?)",
             (student_id, name, department, grade, year)
         )
+
+        # 成績を挿入（複数科目対応）
+        subjects = request.form.getlist("subjects")
+        scores = request.form.getlist("scores")
+        
+        for subject, score in zip(subjects, scores):
+            if subject and score:  # 空でないもののみ挿入
+                try:
+                    cur.execute(
+                        "INSERT INTO scores (student_id, subject, score) VALUES (?, ?, ?)",
+                        (student_id, subject, int(score))
+                    )
+                except (ValueError, sqlite3.Error):
+                    # スコアが数値でない場合やDB エラーはスキップ
+                    pass
 
         db.commit()
         db.close()

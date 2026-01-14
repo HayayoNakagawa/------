@@ -85,6 +85,60 @@
         text-align: center;
         margin-top: 20px;
       }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #3b82f6;
+        padding-bottom: 8px;
+      }
+
+      .score-group {
+        background: #f9fafb;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 10px;
+        align-items: flex-end;
+      }
+
+      .score-group input {
+        width: 100%;
+      }
+
+      .score-group button {
+        width: auto;
+        padding: 10px 16px;
+        background: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .score-group button:hover {
+        background: #dc2626;
+      }
+
+      #addScoreBtn {
+        background: #10b981;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      #addScoreBtn:hover {
+        background: #059669;
+      }
     </style>
 </head>
 <body>
@@ -122,7 +176,49 @@
           <input type="number" id="year" name="year" required>
         </div>
 
-        <button type="submit">追加</button>
+        <div class="section-title">成績（任意）</div>
+
+        <div id="scoresContainer">
+          <div class="score-group">
+            <div>
+              <label style="display: block; margin-bottom: 5px; font-size: 12px; color: #666;">科目</label>
+
+  <script>
+    function addScoreField() {
+      const container = document.getElementById('scoresContainer');
+      const newField = document.createElement('div');
+      newField.className = 'score-group';
+      newField.innerHTML = `
+        <div>
+          <label style="display: block; margin-bottom: 5px; font-size: 12px; color: #666;">科目</label>
+          <input type="text" name="subjects" placeholder="例：数学" class="subject-input">
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 5px; font-size: 12px; color: #666;">点数</label>
+          <input type="number" name="scores" min="0" max="100" placeholder="0～100" class="score-input">
+        </div>
+        <button type="button" onclick="removeScoreField(this)">削除</button>
+      `;
+      container.appendChild(newField);
+    }
+
+    function removeScoreField(button) {
+      button.parentElement.remove();
+    }
+  </script>
+              <input type="text" name="subjects" placeholder="例：国語" class="subject-input">
+            </div>
+            <div>
+              <label style="display: block; margin-bottom: 5px; font-size: 12px; color: #666;">点数</label>
+              <input type="number" name="scores" min="0" max="100" placeholder="0～100" class="score-input">
+            </div>
+            <button type="button" onclick="removeScoreField(this)">削除</button>
+          </div>
+        </div>
+
+        <button type="button" id="addScoreBtn" onclick="addScoreField()">＋ 科目を追加</button>
+
+        <button type="submit" style="margin-top: 25px;">追加</button>
       </form>
     </div>
 
