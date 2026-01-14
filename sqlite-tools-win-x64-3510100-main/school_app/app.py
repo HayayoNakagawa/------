@@ -99,12 +99,21 @@ def student_detail(student_id):
 @app.route("/scores")
 def scores():
     cur = get_db().cursor()
+    search = request.args.get('search', '').strip()
+    
     # 動的に科目一覧を取得
     cur.execute("SELECT DISTINCT subject FROM scores ORDER BY subject")
     subjects = [r[0] for r in cur.fetchall()]
 
-    # 全学生取得
-    cur.execute("SELECT student_id, name, department FROM students ORDER BY student_id")
+    # 学生取得（検索条件がある場合はフィルタリング）
+    if search:
+        cur.execute(
+            "SELECT student_id, name, department FROM students WHERE name LIKE ? OR student_id LIKE ? ORDER BY student_id",
+            (f"%{search}%", f"%{search}%")
+        )
+    else:
+        cur.execute("SELECT student_id, name, department FROM students ORDER BY student_id")
+    
     students = cur.fetchall()
 
     # 各学生ごとに科目->点数のマッピングを作る

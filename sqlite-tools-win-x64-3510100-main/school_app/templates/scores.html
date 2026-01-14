@@ -33,17 +33,57 @@
             background: #1976d2;
             color: white;
         }
+
+        .search-box {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            text-align: center;
+        }
+
+        .search-box input {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .search-box button {
+            padding: 8px 16px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background: #1565c0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
 
 <h1>成績一覧</h1>
 
-<p style="margin-bottom: 20px;">
+<p style="margin-bottom: 20px; text-align: center;">
   <a href="/" style="color: #2563eb; text-decoration: none;">← ホームへ戻る</a>
 </p>
 
-<table>
+<div class="search-box">
+  <form method="get">
+    <input type="text" name="search" placeholder="名前または学籍番号で検索..." 
+           value="{{ request.args.get('search', '') }}">
+    <button type="submit">検索</button>
+  </form>
+</div>
+
+<div class="container">
+  <table>
     <tr>
         <th>学籍番号</th>
         <th>名前</th>
@@ -63,6 +103,7 @@
     {% endfor %}
 
 </table>
+</div>
 
 </body>
 </html>
