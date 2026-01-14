@@ -87,6 +87,9 @@
     <tr>
         <th>学籍番号</th>
         <th>名前</th>
+        <th>学科</th>
+        <th>学年</th>
+        <th>入学年度</th>
         {% for subj in subjects %}
         <th>{{ subj }}</th>
         {% endfor %}
@@ -96,8 +99,11 @@
     <tr>
         <td>{{ s[0] }}</td>
         <td>{{ s[1] }}</td>
+        <td>{{ s[2] }}</td>
+        <td>{{ s[3] }}</td>
+        <td>{{ s[4] }}</td>
         {% for i in range(subjects|length) %}
-        <td>{{ s[3 + i] if s[3 + i] is not none else "-" }}</td>
+        <td>{{ s[5 + i] if s[5 + i] is not none else "-" }}</td>
         {% endfor %}
     </tr>
     {% endfor %}

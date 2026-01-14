@@ -108,6 +108,9 @@
         <tr>
           <th>学籍番号</th>
           <th>名前</th>
+          <th>学科</th>
+          <th>学年</th>
+          <th>入学年度</th>
         </tr>
       </thead>
       <tbody>
@@ -119,6 +122,9 @@
         {{ student[1] }}
       </a>
     </td>
+    <td>{{ student[2] }}</td>
+    <td>{{ student[3] }}</td>
+    <td>{{ student[4] }}</td>
   </tr>
   {% endfor %}
 </tbody>

@@ -65,11 +65,11 @@ def students():
     if search:
         # 名前または学籍番号で検索
         cur.execute(
-            "SELECT student_id, name, department FROM students WHERE name LIKE ? OR student_id LIKE ? ORDER BY student_id",
+            "SELECT student_id, name, department, grade, year FROM students WHERE name LIKE ? OR student_id LIKE ? ORDER BY student_id",
             (f"%{search}%", f"%{search}%")
         )
     else:
-        cur.execute("SELECT student_id, name, department FROM students ORDER BY student_id")
+        cur.execute("SELECT student_id, name, department, grade, year FROM students ORDER BY student_id")
     
     rows = cur.fetchall()
     return render_template("students.html", students=rows)
@@ -108,20 +108,20 @@ def scores():
     # 学生取得（検索条件がある場合はフィルタリング）
     if search:
         cur.execute(
-            "SELECT student_id, name, department FROM students WHERE name LIKE ? OR student_id LIKE ? ORDER BY student_id",
+            "SELECT student_id, name, department, grade, year FROM students WHERE name LIKE ? OR student_id LIKE ? ORDER BY student_id",
             (f"%{search}%", f"%{search}%")
         )
     else:
-        cur.execute("SELECT student_id, name, department FROM students ORDER BY student_id")
+        cur.execute("SELECT student_id, name, department, grade, year FROM students ORDER BY student_id")
     
     students = cur.fetchall()
 
     # 各学生ごとに科目->点数のマッピングを作る
     rows = []
-    for student_id, name, department in students:
+    for student_id, name, department, grade, year in students:
         cur.execute("SELECT subject, score FROM scores WHERE student_id = ?", (student_id,))
         score_map = {r[0]: r[1] for r in cur.fetchall()}
-        row = [student_id, name, department] + [score_map.get(s) for s in subjects]
+        row = [student_id, name, department, grade, year] + [score_map.get(s) for s in subjects]
         rows.append(row)
 
     return render_template("scores.html", subjects=subjects, scores=rows)
