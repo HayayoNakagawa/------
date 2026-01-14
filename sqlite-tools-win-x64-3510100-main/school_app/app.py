@@ -60,7 +60,17 @@ def index():
 @app.route("/students")
 def students():
     cur = get_db().cursor()
-    cur.execute("SELECT student_id, name, department FROM students")
+    search = request.args.get('search', '').strip()
+    
+    if search:
+        # 名前または学籍番号で検索
+        cur.execute(
+            "SELECT student_id, name, department FROM students WHERE name LIKE ? OR student_id LIKE ? ORDER BY student_id",
+            (f"%{search}%", f"%{search}%")
+        )
+    else:
+        cur.execute("SELECT student_id, name, department FROM students ORDER BY student_id")
+    
     rows = cur.fetchall()
     return render_template("students.html", students=rows)
 
@@ -111,13 +121,16 @@ def add_student():
     if request.method == "POST":
         student_id = request.form["student_id"]
         name = request.form["name"]
+        department = request.form["department"]
+        grade = request.form["grade"]
+        year = request.form["year"]
 
         db = sqlite3.connect(DATABASE)
         cur = db.cursor()
 
         cur.execute(
-            "INSERT INTO students (student_id, name) VALUES (?, ?)",
-            (student_id, name)
+            "INSERT INTO students (student_id, name, department, grade, year) VALUES (?, ?, ?, ?, ?)",
+            (student_id, name, department, grade, year)
         )
 
         db.commit()

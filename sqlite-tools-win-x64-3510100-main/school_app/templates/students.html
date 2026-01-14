@@ -91,6 +91,13 @@
       <a href="/students/add" class="button">＋ 学生を追加</a>
     </div>
 
+    <form method="get" style="margin-bottom: 20px;">
+      <input type="text" name="search" placeholder="名前または学籍番号で検索..." 
+             value="{{ request.args.get('search', '') }}" 
+             style="padding: 8px; width: 300px; border: 1px solid #ddd; border-radius: 4px;">
+      <button type="submit" style="padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">検索</button>
+    </form>
+
     {% if students %}
     <table>
       <thead>
