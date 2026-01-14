@@ -3,13 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <title>学生管理システム</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 60px auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .menu-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .menu-card a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .menu-card:nth-child(1) a {
+      background: #3b82f6;
+    }
+
+    .menu-card:nth-child(1) a:hover {
+      background: #2563eb;
+    }
+
+    .menu-card:nth-child(2) a {
+      background: #10b981;
+    }
+
+    .menu-card:nth-child(2) a:hover {
+      background: #059669;
+    }
+
+    .menu-card:nth-child(3) a {
+      background: #f59e0b;
+    }
+
+    .menu-card:nth-child(3) a:hover {
+      background: #d97706;
+    }
+
+    .menu-card p {
+      margin: 10px 0 0 0;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-  <h1>学生管理システム</h1>
-  <ul>
-    <li><a href="{{ url_for('students') }}">学生一覧</a></li>
-    <li><a href="{{ url_for('scores') }}">成績一覧</a></li>
-    <li><a href="{{ url_for('add_student') }}">学生を追加</a></li>
-  </ul>
+  <div class="container">
+    <h1>学生管理システム</h1>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <a href="{{ url_for('students') }}">学生一覧</a>
+        <p>全ての学生を表示・検索</p>
+      </div>
+
+      <div class="menu-card">
+        <a href="{{ url_for('scores') }}">成績一覧</a>
+        <p>学生の成績をまとめて確認</p>
+      </div>
+
+      <div class="menu-card">
+        <a href="{{ url_for('add_student') }}">学生を追加</a>
+        <p>新しい学生を登録</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
