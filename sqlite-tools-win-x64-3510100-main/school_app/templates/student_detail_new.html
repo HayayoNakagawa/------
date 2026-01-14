@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>学生詳細</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 40px auto;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .info-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+      }
+
+      .info-card p {
+        margin: 10px 0;
+        font-size: 16px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+      }
+
+      th {
+        background: #3b82f6;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-size: 14px;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+      }
+
+      tr:hover {
+        background: #f1f5f9;
+      }
+
+      input[type="number"],
+      input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      button {
+        background: #3b82f6;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background: #2563eb;
+      }
+
+      a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #333;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h1>学生詳細</h1>
+
+    <div class="info-card">
+      <p><strong>学籍番号：</strong>{{ student[0] }}</p>
+      <p><strong>名前：</strong>{{ student[1] }}</p>
+      <p><strong>学科：</strong>{{ student[2] }}</p>
+    </div>
+
+    <h2>成績一覧</h2>
+    {% if scores %}
+    <table>
+      <thead>
+        <tr>
+          <th>科目</th>
+          <th>点数</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in scores %}
+        <tr>
+          <td>{{ s[0] }}</td>
+          <td>{{ s[1] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="info-card">
+      <p style="color: #666; text-align: center;">成績が登録されていません</p>
+    </div>
+    {% endif %}
+
+    <h2>成績編集</h2>
+    {% if scores %}
+    <div class="info-card">
+      <form method="post" action="/students/{{ student[0] }}/edit">
+        <table>
+          <thead>
+            <tr>
+              <th>科目</th>
+              <th>点数</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in scores %}
+            <tr>
+              <td>{{ s[0] }}</td>
+              <td>
+                <input
+                  type="number"
+                  name="{{ s[0] }}"
+                  value="{{ s[1] }}"
+                  min="0"
+                  max="100"
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <button type="submit">保存</button>
+      </form>
+    </div>
+    {% endif %}
+
+    <h2>成績を追加</h2>
+    <div class="info-card">
+      <form method="post" action="/students/{{ student[0] }}/add_score">
+        <div class="form-group">
+          <label for="subject">科目：</label>
+          <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+          <label for="score">点数：</label>
+          <input type="number" id="score" name="score" min="0" max="100" required>
+        </div>
+        <button type="submit">追加</button>
+      </form>
+    </div>
+
+    <p style="margin-top: 30px;"><a href="/students">← 学生一覧に戻る</a></p>
+  </div>
+</body>
+</html>

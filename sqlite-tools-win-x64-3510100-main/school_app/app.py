@@ -99,22 +99,23 @@ def student_detail(student_id):
 @app.route("/scores")
 def scores():
     cur = get_db().cursor()
-    cur.execute("""
-        SELECT
-            students.student_id,
-            students.name,
-            students.department,
-            MAX(CASE WHEN scores.subject = '国語' THEN scores.score END),
-            MAX(CASE WHEN scores.subject = '数学' THEN scores.score END),
-            MAX(CASE WHEN scores.subject = '英語' THEN scores.score END),
-            MAX(CASE WHEN scores.subject = '情報' THEN scores.score END)
-        FROM students
-        LEFT JOIN scores ON students.student_id = scores.student_id
-        GROUP BY students.student_id, students.name, students.department
-        ORDER BY students.student_id
-    """)
-    rows = cur.fetchall()
-    return render_template("scores.html", scores=rows)
+    # 動的に科目一覧を取得
+    cur.execute("SELECT DISTINCT subject FROM scores ORDER BY subject")
+    subjects = [r[0] for r in cur.fetchall()]
+
+    # 全学生取得
+    cur.execute("SELECT student_id, name, department FROM students ORDER BY student_id")
+    students = cur.fetchall()
+
+    # 各学生ごとに科目->点数のマッピングを作る
+    rows = []
+    for student_id, name, department in students:
+        cur.execute("SELECT subject, score FROM scores WHERE student_id = ?", (student_id,))
+        score_map = {r[0]: r[1] for r in cur.fetchall()}
+        row = [student_id, name, department] + [score_map.get(s) for s in subjects]
+        rows.append(row)
+
+    return render_template("scores.html", subjects=subjects, scores=rows)
 
 @app.route("/students/add", methods=["GET", "POST"])
 def add_student():
