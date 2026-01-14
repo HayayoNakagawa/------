@@ -98,7 +98,11 @@
     {% for s in scores %}
     <tr>
         <td>{{ s[0] }}</td>
-        <td>{{ s[1] }}</td>
+        <td>
+          <a href="/students/{{ s[0] }}?from=scores" style="color: #2563eb; text-decoration: none;">
+            {{ s[1] }}
+          </a>
+        </td>
         <td>{{ s[2] }}</td>
         <td>{{ s[3] }}</td>
         <td>{{ s[4] }}</td>

@@ -79,7 +79,7 @@ def student_detail(student_id):
     cur = get_db().cursor()
 
     cur.execute(
-        "SELECT student_id, name, department FROM students WHERE student_id = ?",
+        "SELECT student_id, name, department, grade, year FROM students WHERE student_id = ?",
         (student_id,)
     )
     student = cur.fetchone()
@@ -95,6 +95,25 @@ def student_detail(student_id):
         student=student,
         scores=scores
     )
+
+@app.route("/students/<student_id>/edit_info", methods=["POST"])
+def edit_student_info(student_id):
+    department = request.form["department"]
+    grade = request.form["grade"]
+    year = request.form["year"]
+
+    db = sqlite3.connect(DATABASE)
+    cur = db.cursor()
+
+    cur.execute(
+        "UPDATE students SET department = ?, grade = ?, year = ? WHERE student_id = ?",
+        (department, int(grade), int(year), student_id)
+    )
+
+    db.commit()
+    db.close()
+
+    return redirect(url_for("student_detail", student_id=student_id))
 
 @app.route("/scores")
 def scores():
