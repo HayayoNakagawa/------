@@ -3,43 +3,130 @@
 <head>
     <meta charset="utf-8">
     <title>学生追加</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      .form-card {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+        font-size: 14px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      button {
+        background: #3b82f6;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        width: 100%;
+      }
+
+      button:hover {
+        background: #2563eb;
+      }
+
+      a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .back-link {
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
 </head>
 <body>
-    <h1>学生追加</h1>
-
+  <div class="container">
     <p style="margin-bottom: 20px;">
       <a href="/" style="color: #2563eb; text-decoration: none;">← ホームへ戻る</a>
     </p>
 
-    <form method="post">
-    <p>
-        学籍番号：
-        <input type="text" name="student_id" required>
-    </p>
+    <h1>学生追加</h1>
 
-    <p>
-        名前：
-        <input type="text" name="name" required>
-    </p>
+    <div class="form-card">
+      <form method="post">
+        <div class="form-group">
+          <label for="student_id">学籍番号：</label>
+          <input type="text" id="student_id" name="student_id" required>
+        </div>
 
-    <p>
-        学科：
-        <input type="text" name="department" required>
-    </p>
+        <div class="form-group">
+          <label for="name">名前：</label>
+          <input type="text" id="name" name="name" required>
+        </div>
 
-    <p>
-        学年：
-        <input type="number" name="grade" required>
-    </p>
+        <div class="form-group">
+          <label for="department">学科：</label>
+          <input type="text" id="department" name="department" required>
+        </div>
 
-    <p>
-        年度：
-        <input type="number" name="year" required>
-    </p>
+        <div class="form-group">
+          <label for="grade">学年：</label>
+          <input type="number" id="grade" name="grade" required>
+        </div>
 
-</form>
+        <div class="form-group">
+          <label for="year">年度：</label>
+          <input type="number" id="year" name="year" required>
+        </div>
 
-    <p><a href="/students">← 学生一覧へ</a></p>
-    <p style="text-align: center;"><a href="/">← ホームへ戻る</a></p>
+        <button type="submit">追加</button>
+      </form>
+    </div>
+
+    <p class="back-link"><a href="/students">← 学生一覧へ</a></p>
+  </div>
 </body>
 </html>
